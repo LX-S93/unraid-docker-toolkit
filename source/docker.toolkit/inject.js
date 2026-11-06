@@ -34,12 +34,13 @@ $(function () {
       $val.text(DT.fmtMb(cur));
     }
   }
+  // write into Extra Parameters and tell Unraid the form changed (enables "Apply")
+  function setExtra(v) { $ex.val(v).trigger('input').trigger('change'); }
   $rng.attr('max', STEPS.length - 1);
   $rng.on('input', function () { $val.text(DT.fmtMb(STEPS[+this.value])); })
-      .on('change', function () { $ex.val(DT.memToExtra($ex.val(), STEPS[+this.value])); showMem(); });
+      .on('change', function () { setExtra(DT.memToExtra($ex.val(), STEPS[+this.value])); });
   $unl.on('change', function () {
-    $ex.val(DT.memToExtra($ex.val(), this.checked ? 0 : STEPS[+$rng.val()]));
-    showMem();
+    setExtra(DT.memToExtra($ex.val(), this.checked ? 0 : STEPS[+$rng.val()]));
   });
   $ex.on('change keyup', showMem);
 
@@ -98,7 +99,7 @@ $(function () {
     if (!$.trim($ip.val()) && isNew) suggestIp();
     if (!$.trim($mac.val())) {
       var cm = currentMac();
-      if (cm) { $mac.val(cm); $macInfo.html('<span class="dt-ok">current MAC kept – stays the same from now on</span>'); }
+      if (cm) { $mac.val(cm).trigger('input'); $macInfo.html('<span class="dt-ok">current MAC kept – stays the same from now on</span>'); }
       else genMac();
     }
     checkIp();
