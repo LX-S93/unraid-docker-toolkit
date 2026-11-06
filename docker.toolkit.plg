@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "docker.toolkit">
 <!ENTITY author    "LX-S93">
-<!ENTITY version   "2026.11.06a">
-<!ENTITY md5       "b03793a195b9df7e393ce0563936411e">
+<!ENTITY version   "2026.11.06.1">
+<!ENTITY md5       "f9cc5bd0ffb441201037614b79b841d6">
 <!ENTITY github    "LX-S93/unraid-docker-toolkit">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&github;/main">
 <!ENTITY pluginURL "&gitURL;/&name;.plg">
@@ -13,7 +13,7 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;" support="https://github.com/&github;/issues" project="https://github.com/&github;" min="7.0.0" icon="sitemap" launch="IPAM">
 
 <CHANGES>
-### 2026.11.06a
+### 2026.11.06.1
 - Memory slider now enables the Apply button on the Edit Container page
 ### 2026.11.06
 - First public release
