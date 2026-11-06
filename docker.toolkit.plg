@@ -1,0 +1,61 @@
+<?xml version='1.0' standalone='yes'?>
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "docker.toolkit">
+<!ENTITY author    "LX-S93">
+<!ENTITY version   "2026.11.06">
+<!ENTITY md5       "a84457d97f8b83426d833565749fb4e7">
+<!ENTITY github    "LX-S93/unraid-docker-toolkit">
+<!ENTITY gitURL    "https://raw.githubusercontent.com/&github;/main">
+<!ENTITY pluginURL "&gitURL;/&name;.plg">
+<!ENTITY pkg       "&name;-&version;-x86_64-1">
+<!ENTITY cfg       "/boot/config/plugins/&name;">
+]>
+<PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;" support="https://github.com/&github;/issues" project="https://github.com/&github;" min="7.0.0" icon="sitemap" launch="IPAM">
+
+<CHANGES>
+### 2026.11.06
+- First public release
+- Memory limit slider on the Add/Edit Container page, default limit for new containers
+- IPAM page in the top navigation: address map per Docker network, container icons, search
+- Pin current IP/MAC into the template, change or assign IPs (optionally recreating the container)
+- Leftover templates of removed containers are detected, hidden by default and can be archived
+- Device records (network scan or manual), reserved ranges, duplicate detection
+- "Lock current IPs/MACs" to take over existing containers before disabling DHCP
+</CHANGES>
+
+<!-- clean up a previous manual install and old packages -->
+<FILE Run="/bin/bash">
+<INLINE>
+mkdir -p &cfg;
+rm -rf &cfg;/src
+find &cfg; -maxdepth 1 -name '&name;-*.txz' ! -name '&pkg;.txz' -delete
+[ -d /usr/local/emhttp/plugins/&name; ] &amp;&amp; ! ls /var/log/packages/&name;-* >/dev/null 2>&amp;1 &amp;&amp; rm -rf /usr/local/emhttp/plugins/&name;
+true
+</INLINE>
+</FILE>
+
+<FILE Name="&cfg;/&pkg;.txz" Run="upgradepkg --install-new">
+<URL>&gitURL;/archive/&pkg;.txz</URL>
+<MD5>&md5;</MD5>
+</FILE>
+
+<FILE Run="/bin/bash">
+<INLINE>
+echo ""
+echo "----------------------------------------------------"
+echo " &name; &version; installed"
+echo " IPAM: top navigation / Settings: User Utilities"
+echo "----------------------------------------------------"
+</INLINE>
+</FILE>
+
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+removepkg &pkg; >/dev/null 2>&amp;1
+rm -rf /usr/local/emhttp/plugins/&name;
+rm -f &cfg;/&name;-*.txz
+echo "&name; removed. Settings, IPAM data and template backups are kept in &cfg;"
+</INLINE>
+</FILE>
+
+</PLUGIN>

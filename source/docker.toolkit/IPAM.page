@@ -1,0 +1,20 @@
+Menu="Tasks:61"
+Title="IPAM"
+Code="f0e8"
+Cond="is_file('/var/run/dockerd.pid')"
+Markdown="false"
+---
+<link rel="stylesheet" href="<?autov('/plugins/docker.toolkit/dt.css')?>">
+<div id="dt-msg"></div>
+<div class="dt-toolbar">
+<input type="search" id="dt-search" placeholder="Search container, IP or MAC …">
+<label><input type="checkbox" id="dt-hide-empty" checked> Hide networks without containers or devices</label>
+<label><input type="checkbox" id="dt-show-tpl"> Show leftover templates</label>
+<span class="dt-grow"></span>
+<button type="button" id="dt-import">Lock current IPs/MACs …</button>
+</div>
+<div class="dt-legend"><span class="dt-tile t-run"></span>running <span class="dt-tile t-stop"></span>stopped <span class="dt-tile t-tpl"></span>template only <span class="dt-tile t-dev"></span>other device <span class="dt-tile t-gw"></span>gateway <span class="dt-tile t-res"></span>reserved <span class="dt-tile t-conflict"></span>duplicate <span class="dt-tile t-latent"></span>clashes with leftover template <span class="dt-tile t-free"></span>free</div>
+<div id="dt-import-preview"></div>
+<div id="dt-nets"></div>
+<script src="<?autov('/plugins/docker.toolkit/dt.js')?>"></script>
+<script src="<?autov('/plugins/docker.toolkit/ipam-map.js')?>"></script>

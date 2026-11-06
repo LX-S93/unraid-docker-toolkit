@@ -1,0 +1,29 @@
+Menu="Utilities"
+Title="Docker Toolkit"
+Icon="sitemap"
+Tag="sitemap"
+Markdown="false"
+---
+<link rel="stylesheet" href="<?autov('/plugins/docker.toolkit/dt.css')?>">
+<div id="dt-msg"></div>
+<div class="dt-section">Memory limit</div>
+<p>Default for new containers: <input type="number" id="dt-def" min="0" step="0.25" style="width:70px"> GB
+<button type="button" id="dt-def-save">Save</button> <span id="dt-def-ok" class="dt-ok"></span>
+<span class="dt-muted">· 0 = unlimited · server memory: <span id="dt-host"></span></span></p>
+<p class="dt-muted">Set the limit per container with the "Memory limit" slider when adding or editing a container (below "Privileged").</p>
+<div class="dt-section">IP address management</div>
+<p>Addresses, MACs and conflicts of all Docker networks: <a href="/IPAM">open IPAM</a>. When adding a container, the next free IP and a fixed MAC are suggested automatically.</p>
+<script src="<?autov('/plugins/docker.toolkit/dt.js')?>"></script>
+<script>
+$(function () {
+  DT.get({ action: 'ram' }).done(function (r) {
+    $('#dt-def').val((r.settings.default_mem_mb / 1024).toString());
+    $('#dt-host').text(DT.fmtMb(r.host_mem_mb));
+  });
+  $('#dt-def-save').on('click', function () {
+    var mb = Math.round(parseFloat(String($('#dt-def').val()).replace(',', '.') || '0') * 1024);
+    DT.post({ action: 'set_default', mb: mb }).done(function () { $('#dt-def-ok').text('saved').show().fadeOut(2500); })
+      .fail(function (x) { $('#dt-msg').text(DT.err(x)).show(); });
+  });
+});
+</script>

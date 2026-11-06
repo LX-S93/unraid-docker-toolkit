@@ -1,0 +1,9 @@
+Menu="Buttons"
+Link="nav-user"
+---
+<script>
+if (/\/(AddContainer|UpdateContainer)/.test(location.pathname)) {
+  $("head").append('<link rel="stylesheet" href="/plugins/docker.toolkit/dt.css">');
+  $.getScript("/plugins/docker.toolkit/dt.js", function () { $.getScript("/plugins/docker.toolkit/inject.js"); });
+}
+</script>
